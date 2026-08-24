@@ -1,28 +1,124 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>中文大冒险 YCT 7&8</title><style>
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;margin:0;background:linear-gradient(135deg,#eef7ff,#fff8e8);color:#243447}.wrap{max-width:850px;margin:auto;padding:18px}.card{background:#fff;border-radius:24px;padding:24px;box-shadow:0 12px 30px #2342  ;min-height:560px}.hide{display:none}h1,h2{text-align:center}.stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:12px}.pill{background:#f3f7fb;border-radius:999px;padding:8px 13px;font-weight:700}.btn,button{border:0;border-radius:15px;padding:13px 17px;font-size:18px;font-weight:700;cursor:pointer}.primary{background:#ff8a3d;color:white}.secondary{background:#eaf3ff;color:#245b91}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.level{background:#fff;border:2px solid #d9e5f2;text-align:left;padding:18px;min-height:125px}.locked{opacity:.45}.done{border-color:#2dbf78;background:#effff7}.q{font-size:34px;text-align:center;margin:24px 0 10px}.emoji{font-size:64px;text-align:center}.answers{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.ans{background:#fff;border:2px solid #d9e5f2;min-height:70px}.correct{background:#edfff6!important;border-color:#2dbf78!important}.wrong{background:#fff1f4!important;border-color:#e85d75!important}.feedback{text-align:center;font-size:20px;font-weight:700;min-height:55px;padding:12px}.bar{height:12px;background:#edf1f6;border-radius:999px;overflow:hidden}.bar>div{height:100%;background:#4d96ff;width:0}.match{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.tile{min-height:80px;background:#fff;border:2px solid #d9e5f2}.open{background:#eef6ff}.matched{background:#edfff6;border-color:#2dbf78;opacity:.7}.words,.built{display:flex;gap:9px;flex-wrap:wrap;justify-content:center}.built{min-height:70px;border:2px dashed #c8d9eb;border-radius:15px;padding:12px;margin-bottom:14px}.word{background:#f4f8fd}.cert{text-align:center;border:8px double #f1b649;border-radius:22px;padding:28px;background:#fffdf5}@media(max-width:600px){.grid,.answers{grid-template-columns:1fr}.match{grid-template-columns:repeat(2,1fr)}.q{font-size:28px}}
-</style></head><body><div class="wrap"><div class="stats"><span class="pill">⭐ <b id="stars">0</b></span><span class="pill">❤️ <b id="lives">3</b></span><span class="pill">🏁 <b id="stage">Start</b></span></div>
-<section id="start" class="card"><div class="emoji">🐉</div><h1>中文大冒险</h1><h2>YCT Level 1 · Lesson 7 & 8</h2><p style="text-align:center;font-size:19px;line-height:1.6">Complete four levels and practise Chinese words and sentences.</p><p style="text-align:center"><button id="startBtn" class="primary">Start Adventure</button></p></section>
-<section id="map" class="card hide"><h2>Choose a Level</h2><div id="levels" class="grid"></div><p style="text-align:center"><button id="resetMapBtn" class="secondary">Start Again</button></p></section>
-<section id="quiz" class="card hide"><button class="secondary map-btn">← Level Map</button><p style="text-align:center">Choose the correct answer.</p><div class="bar"><div id="qbar"></div></div><div id="emoji" class="emoji"></div><div id="question" class="q"></div><p style="text-align:center"><button id="speakBtn" class="secondary">🔊 Listen to Chinese</button></p><div id="answers" class="answers"></div><div id="feedback" class="feedback"></div><p style="text-align:center"><button id="next" class="primary hide">Next Question →</button></p></section>
-<section id="match" class="card hide"><button class="secondary map-btn">← Level Map</button><h2>Matching Challenge</h2><p style="text-align:center">Match each Chinese word with its English meaning.</p><div id="matchGrid" class="match"></div><div id="matchFeedback" class="feedback"></div></section>
-<section id="sentence" class="card hide"><button class="secondary map-btn">← Level Map</button><h2>Sentence Builder</h2><p style="text-align:center">Tap the words in the correct order.</p><div id="prompt" class="q"></div><div id="built" class="built"></div><div id="bank" class="words"></div><div id="sentenceFeedback" class="feedback"></div><p style="text-align:center"><button id="clearBtn" class="secondary">Clear</button> <button id="checkBtn" class="primary">Check Answer</button></p></section>
-<section id="finish" class="card hide"><div class="cert"><div class="emoji">🏆</div><h1>Adventure Complete!</h1><h2>Congratulations! You are a Chinese Hero!</h2><p style="font-size:24px">Final Stars: ⭐ <b id="finalStars"></b></p><button id="playAgainBtn" class="primary">Play Again</button></div></section></div>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>中文大冒险 YCT 7-10</title>
+<style>
+*{box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;margin:0;background:linear-gradient(135deg,#eaf6ff,#fff5df);color:#243447}.wrap{max-width:900px;margin:auto;padding:18px}.card{background:#fff;border-radius:24px;padding:24px;box-shadow:0 12px 30px #2342;min-height:590px}.hide{display:none!important}h1,h2{text-align:center}.subtitle{text-align:center;font-size:19px;line-height:1.6}.stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:12px}.pill{background:#fff;border-radius:999px;padding:8px 13px;font-weight:700;box-shadow:0 3px 10px #2341}.btn,button{border:0;border-radius:15px;padding:13px 17px;font-size:18px;font-weight:700;cursor:pointer;touch-action:manipulation}.primary{background:#ff8a3d;color:#fff}.secondary{background:#eaf3ff;color:#245b91}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.level{background:#fff;border:2px solid #d9e5f2;text-align:left;padding:18px;min-height:125px}.locked{opacity:.45}.done{border-color:#2dbf78;background:#effff7}.q{font-size:32px;text-align:center;margin:22px 0 10px}.emoji{font-size:58px;text-align:center}.answers{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.ans{background:#fff;border:2px solid #d9e5f2;min-height:68px}.correct{background:#edfff6!important;border-color:#2dbf78!important}.wrong{background:#fff1f4!important;border-color:#e85d75!important}.feedback{text-align:center;font-size:20px;font-weight:700;min-height:55px;padding:12px}.bar{height:12px;background:#edf1f6;border-radius:999px;overflow:hidden}.bar>div{height:100%;background:#4d96ff;width:0}.counter{text-align:center;color:#617285;font-weight:700;margin:10px}.match{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.tile{min-height:72px;background:#fff;border:2px solid #d9e5f2;padding:8px}.open{background:#eef6ff}.matched{background:#edfff6;border-color:#2dbf78;opacity:.65}.words,.built{display:flex;gap:9px;flex-wrap:wrap;justify-content:center}.built{min-height:76px;border:2px dashed #c8d9eb;border-radius:15px;padding:12px;margin:16px 0}.word{background:#f4f8fd;color:#1670c9}.cert{text-align:center;border:8px double #f1b649;border-radius:22px;padding:28px;background:#fffdf5}.lesson-tags{text-align:center;line-height:2}.tag{display:inline-block;background:#eef6ff;border-radius:999px;padding:4px 10px;margin:3px}.small{font-size:15px;color:#607080;text-align:center}@media(max-width:650px){.grid,.answers{grid-template-columns:1fr}.match{grid-template-columns:repeat(2,1fr)}.q{font-size:27px}.card{padding:17px;min-height:570px}.wrap{padding:10px}.btn,button{font-size:17px}.emoji{font-size:50px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="stats"><span class="pill">⭐ <b id="stars">0</b></span><span class="pill">❤️ <b id="lives">5</b></span><span class="pill">🏁 <b id="stage">Start</b></span></div>
+<section id="start" class="card"><div class="emoji">🐉</div><h1>中文大冒险</h1><h2>YCT Level 1 · Lessons 7-10</h2><p class="subtitle">Complete seven levels and practise Chinese words, sentences, dates and time.</p><div class="lesson-tags"><span class="tag">Lesson 7 · Whose?</span><span class="tag">Lesson 8 · Places</span><span class="tag">Lesson 9 · Days & Dates</span><span class="tag">Lesson 10 · Time</span></div><p style="text-align:center"><button id="startBtn" class="primary">Start Adventure</button></p></section>
+<section id="map" class="card hide"><h2>Choose a Level</h2><p class="small">Complete each level to unlock the next one.</p><div id="levels" class="grid"></div><p style="text-align:center"><button id="resetMapBtn" class="secondary">Start Again</button></p></section>
+<section id="quiz" class="card hide"><button class="secondary map-btn">← Level Map</button><p class="counter" id="counter"></p><p class="small">Choose the correct answer.</p><div class="bar"><div id="qbar"></div></div><div id="emoji" class="emoji"></div><div id="question" class="q"></div><p style="text-align:center"><button id="speakBtn" class="secondary">🔊 Listen to Chinese</button></p><div id="answers" class="answers"></div><div id="feedback" class="feedback"></div><p style="text-align:center"><button id="next" class="primary hide">Next Question →</button></p></section>
+<section id="match" class="card hide"><button class="secondary map-btn">← Level Map</button><h2>Word Matching</h2><p class="small">Match each Chinese word with its English meaning.</p><div id="matchGrid" class="match"></div><div id="matchFeedback" class="feedback"></div></section>
+<section id="sentence" class="card hide"><button class="secondary map-btn">← Level Map</button><h2>Sentence Builder</h2><p class="counter" id="sentenceCounter"></p><p class="small">Tap the words in the correct order.</p><div id="prompt" class="q"></div><div id="built" class="built"></div><div id="bank" class="words"></div><div id="sentenceFeedback" class="feedback"></div><p style="text-align:center"><button id="clearBtn" class="secondary">Clear</button> <button id="checkBtn" class="primary">Check Answer</button></p></section>
+<section id="finish" class="card hide"><div class="cert"><div class="emoji">🏆</div><h1>Adventure Complete!</h1><h2>Congratulations! You completed Lessons 7-10.</h2><p style="font-size:24px">Final Stars: ⭐ <b id="finalStars"></b></p><p>Take a screenshot and submit it in Google Classroom.</p><button id="playAgainBtn" class="primary">Play Again</button></div></section>
+</div>
 <script>
-const body=[['👄','这是身体的哪一部分？','嘴巴',['嘴巴','鼻子','耳朵','脚'],0],['👃','这是身体的哪一部分？','鼻子',['肩膀','鼻子','膝盖','嘴巴'],1],['👂','这是身体的哪一部分？','耳朵',['耳朵','脚','嘴巴','肩膀'],0],['🦵','knee 的中文是什么？','膝盖',['脚','膝盖','鼻子','耳朵'],1],['🦶','foot 的中文是什么？','脚',['脚','手','肩膀','膝盖'],0]];
-const boss=[['📏','你的个子高吗？','你的个子高吗',['不高。','我去学校。','这是我的手。','医院在那儿。'],0],['👩','你妈妈的头发长吗？','你妈妈的头发长吗',['很长。','不去。','在家。','这是书。'],0],['🏫','你去哪？','你去哪',['我去学校。','我七岁。','我是泰国人。','这是猫。'],0],['🏥','医院在哪儿？','医院在哪儿',['医院在那儿。','我去医院吗？','这是医院。','医院很长。'],0],['📚','你们去公园吗？','你们去公园吗',['不去，我们去图书馆。','我去学校。','公园在那儿。','这是图书馆。'],0],['🐉','dragon 的中文是什么？','龙',['蛇','龙','老鼠','马'],1],['🐍','snake 的中文是什么？','蛇',['龙','老鼠','蛇','羊'],2],['🐭','mouse 的中文是什么？','老鼠',['老鼠','猴','鸡','牛'],0]];
-const pairs=[['高','tall'],['矮','short (height)'],['长','long'],['短','short (length)'],['银行','bank'],['商场','shopping mall']];
-const sentences=[['Where are you going?',['你','去','哪儿','？'],['我','学校','在']],['Where is the hospital?',['医院','在','哪儿','？'],['去','的','那儿']],['They are going to school.',['他们','去','学校','。'],['哪儿','有','这儿']],['Where is the library?',['图书馆','在','哪儿','？'],['去','很','这']],['No, we are going to the library.',['不去','，','我们','去','图书馆','。'],['公园','有','吗']]];
-let stars=0,lives=3,done=[false,false,false,false],set=[],qi=0,level=0,locked=false,first=null,matched=0,si=0,built=[];
-const el=id=>document.getElementById(id),starsEl=el('stars'),livesEl=el('lives'),stageEl=el('stage'),levelsEl=el('levels'),emojiEl=el('emoji'),questionEl=el('question'),answersEl=el('answers'),feedbackEl=el('feedback'),nextEl=el('next'),qbarEl=el('qbar'),matchGridEl=el('matchGrid'),matchFeedbackEl=el('matchFeedback'),promptEl=el('prompt'),bankEl=el('bank'),sentenceFeedbackEl=el('sentenceFeedback'),finalStarsEl=el('finalStars');
-function show(id){document.querySelectorAll('section').forEach(x=>x.classList.add('hide'));el(id).classList.remove('hide');window.scrollTo(0,0)}function stats(){starsEl.textContent=stars;livesEl.textContent=lives}
-function showMap(){show('map');stageEl.textContent='Map';levelsEl.innerHTML='';[['👂','Body Detective'],['📏','Opposites Forest'],['🏫','Place Mission'],['🐲','Boss Challenge']].forEach((x,i)=>{let b=document.createElement('button');b.className='level '+(done[i]?'done ':'')+((i&&!done[i-1])?'locked':'');b.disabled=i&&!done[i-1];b.innerHTML='<div style="font-size:34px">'+(done[i]?'✅':x[0])+'</div><h3>'+(i+1)+'. '+x[1]+'</h3>';b.onclick=()=>startLevel(i);levelsEl.appendChild(b)})}
-function startLevel(i){level=i;stageEl.textContent=(i+1)+'/4';if(i==0){set=[...body];qi=0;renderQ()}else if(i==1)startMatch();else if(i==2)startSentence();else{set=shuffle([...boss]).slice(0,6);qi=0;renderQ()}}
-function renderQ(){show('quiz');locked=false;let x=set[qi];emojiEl.textContent=x[0];questionEl.textContent=x[1];answersEl.innerHTML='';feedbackEl.textContent='';nextEl.classList.add('hide');qbarEl.style.width=(qi/set.length*100)+'%';x[3].forEach((t,i)=>{let b=document.createElement('button');b.className='ans';b.textContent=t;b.onclick=()=>answer(i,b);answersEl.appendChild(b)})}
-function answer(i,b){if(locked)return;locked=true;let x=set[qi];[...answersEl.children].forEach((n,k)=>{n.disabled=true;if(k==x[4])n.classList.add('correct')});if(i==x[4]){stars++;b.classList.add('correct');feedbackEl.textContent='✅ Great! Correct!'}else{lives=Math.max(0,lives-1);b.classList.add('wrong');feedbackEl.textContent='Not quite. Look at the correct answer.'}stats();qbarEl.style.width=((qi+1)/set.length*100)+'%';nextEl.classList.remove('hide')}
-function nextQ(){qi++;qi>=set.length?complete(level):renderQ()}function speakQ(){let x=set[qi];if('speechSynthesis'in window){speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(x[2]);u.lang='zh-CN';u.rate=.82;speechSynthesis.speak(u)}}
-function startMatch(){show('match');first=null;matched=0;matchFeedbackEl.textContent='';let arr=[];pairs.forEach((p,i)=>{arr.push([p[0],i]);arr.push([p[1],i])});matchGridEl.innerHTML='';shuffle(arr).forEach(x=>{let b=document.createElement('button');b.className='tile';b.textContent=x[0];b.dataset.p=x[1];b.onclick=()=>flip(b);matchGridEl.appendChild(b)})}
-function flip(b){if(b.classList.contains('matched')||b==first)return;b.classList.add('open');if(!first){first=b;return}if(first.dataset.p==b.dataset.p){first.classList.add('matched');b.classList.add('matched');first.classList.remove('open');b.classList.remove('open');first=null;matched++;stars+=2;stats();matchFeedbackEl.textContent='✅ Correct match!';if(matched==pairs.length)setTimeout(()=>complete(1),600)}else{let a=first;first=null;lives=Math.max(0,lives-1);stats();matchFeedbackEl.textContent='These two do not match. Try again.';setTimeout(()=>{a.classList.remove('open');b.classList.remove('open')},700)}}
-function startSentence(){si=0;show('sentence');renderSentence()}function renderSentence(){built=[];let x=sentences[si];promptEl.textContent=x[0];el('built').innerHTML='';bankEl.innerHTML='';sentenceFeedbackEl.textContent='';shuffle([...x[1],...x[2]]).forEach(w=>{let b=document.createElement('button');b.className='word';b.textContent=w;b.onclick=()=>{built.push(w);b.disabled=true;b.style.opacity=.4;renderBuilt()};bankEl.appendChild(b)})}function renderBuilt(){let z=el('built');z.innerHTML='';built.forEach(w=>{let b=document.createElement('button');b.className='word';b.textContent=w;z.appendChild(b)})}function clearBuilt(){built=[];renderBuilt();[...bankEl.children].forEach(b=>{b.disabled=false;b.style.opacity=1})}function checkSentence(){let x=sentences[si];if(built.join('')==x[1].join('')){stars+=2;stats();sentenceFeedbackEl.textContent='✅ Perfect!';setTimeout(()=>{si++;si>=sentences.length?complete(2):renderSentence()},700)}else{lives=Math.max(0,lives-1);stats();sentenceFeedbackEl.textContent='The word order is not correct. Try again.'}}
-function complete(i){done[i]=true;if(i==3){finalStarsEl.textContent=stars;show('finish');stageEl.textContent='Complete'}else{alert('🎉 Level complete! The next level is unlocked.');showMap()}}function resetGame(){stars=0;lives=3;done=[false,false,false,false];stats();showMap()}function shuffle(a){for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+const ownership=[
+['🍎','Whose apple is this?','这是谁的苹果？',['这是我的苹果。','那是我的猫。','这儿有苹果。','我去商店。'],0],
+['🐱','Whose cat is that?','那是谁的猫？',['这是狗。','那是我的猫。','猫在学校。','我喜欢猫。'],1],
+['📖','What is here?','这儿有什么？',['这儿有书。','那是谁的书？','我去书店。','书在那儿吗？'],0],
+['🐟','What is over there?','那儿有什么？',['那儿有很多小鱼。','这是我的鱼。','鱼去哪儿？','我不喜欢鱼。'],0],
+['🐶','What is that?','那是什么？',['那是狗。','这是猫。','狗在家吗？','那是谁的？'],0],
+['📺','What is here?','这儿有什么？',['这儿有电视。','我看书。','电视在哪儿？','那是我的。'],0],
+['🐰','Choose the correct Chinese word.','兔子',['猴','兔子','老虎','老鼠'],1],
+['🐲','Choose the correct Chinese word.','龙',['蛇','马','龙','羊'],2],
+['🐭','Choose the correct Chinese word.','老鼠',['老鼠','牛','鸡','猪'],0],
+['🐒','Choose the correct Chinese word.','猴',['鸟','猴','鱼','猫'],1]
+];
+const places=[
+['🏫','Where are you?','你在哪儿？',['我在学校。','我去学校。','学校在哪儿？','我喜欢学校。'],0],
+['🏠','Is your older sister at home?','你姐姐在家吗？',['不在。','不去。','不是。','没有。'],0],
+['🏥','Where are you going?','你去哪儿？',['我去医院。','我在医院。','医院在那儿。','这是医院。'],0],
+['🏪','Are you going to the shop?','你去商店吗？',['我不去商店，我去公园。','商店在那儿。','这是我的商店。','我在商店吗？'],0],
+['📚','Where is the library?','图书馆在哪儿？',['图书馆在那儿。','我去图书馆。','这是图书馆。','那儿有书。'],0],
+['🏦','What is “bank” in Chinese?','银行',['医院','银行','饭店','商场'],1],
+['🏨','What is “hotel” in Chinese?','酒店',['书店','花店','酒店','学校'],2],
+['🛍️','What is “shopping mall” in Chinese?','商场',['商店','商场','银行','公园'],1],
+['🌳','They are going to the park.','他们去公园。',['他们去公园。','他们在公园。','我们去公园。','他们去学校。'],0],
+['🏬','Where is the shop?','商店在哪儿？',['商店在那儿。','我去商店。','商店有书。','那是谁的商店？'],0]
+];
+const dates=[
+['📅','What day is it today?','今天星期几？',['今天星期一。','明天星期一。','今天一月一号。','现在一点。'],0],
+['➡️','What day is it tomorrow?','明天星期几？',['明天星期二。','今天星期二。','明天二月二号。','现在两点。'],0],
+['🎂','When is your birthday?','你的生日是几月几号？',['我的生日是五月五号。','我喜欢星期五。','今天五月。','我五岁。'],0],
+['❤️','Which day do you like?','你喜欢星期几？',['我喜欢星期六。','今天星期六。','我的生日是星期六。','明天六号。'],0],
+['1️⃣','What is Monday in Chinese?','星期一',['星期天','星期一','星期二','一月'],1],
+['7️⃣','What is Sunday in Chinese?','星期天',['星期六','星期天','星期一','今天'],1],
+['📆','What is the date today?','今天是几月几号？',['今天是八月二十四号。','今天星期一。','现在八点。','今年是二〇二六年。'],0],
+['🗓️','What year is this?','今年是哪一年？',['今年是二〇二六年。','今天是二十六号。','今年星期六。','明天是二〇二六年。'],0],
+['🎒','Which day are they going to school?','他们哪天去学校？',['他们下周一去学校。','他们在学校。','他们明天几点去？','学校在那儿。'],0],
+['📖','Read the date.','二〇二六年十二月二十二号',['2026年12月22日','2026年2月12日','2022年12月26日','2016年12月22日'],0],
+['🌞','What does “今天” mean?','今天',['today','tomorrow','year','birthday'],0],
+['🌤️','What does “明天” mean?','明天',['today','tomorrow','Monday','month'],1]
+];
+const times=[
+['🕗','What time is it now?','现在几点？',['现在八点。','今天星期八。','我八岁。','八月八号。'],0],
+['🕣','What time is it?','现在八点半。',['8:00','8:15','8:30','8:50'],2],
+['🕘','What time is it now?','现在九点二十分。',['9:02','9:12','9:20','9:30'],2],
+['⏰','What time do you get up in the morning?','你早上几点起床？',['我早上六点半起床。','我晚上六点半睡觉。','我六号起床。','早上好。'],0],
+['🍚','What time do you have lunch?','你中午几点吃饭？',['我中午十二点吃饭。','我早上十二点起床。','我十二岁。','今天十二号。'],0],
+['🌙','What time do you go to bed?','你晚上几点睡觉？',['我晚上九点睡觉。','我早上九点起床。','晚上九号。','明天星期九。'],0],
+['🏥','What time are you going to the hospital tomorrow?','你明天几点去医院？',['我明天早上八点去医院。','我现在在医院。','医院在那儿。','我明天去学校。'],0],
+['🤝','What time shall we meet tomorrow?','明天几点见？',['明天上午九点见。','今天九号见。','我九岁。','明天星期九。'],0],
+['🌅','What does “早上” mean?','早上',['morning','noon','evening','tomorrow'],0],
+['☀️','What does “中午” mean?','中午',['morning','noon','evening','today'],1],
+['🌃','What does “晚上” mean?','晚上',['morning','noon','evening','year'],2],
+['⌚','What does “分” mean when telling time?','分',['hour','minute','day','month'],1]
+];
+const matchPairs=[['生日','birthday'],['星期','week'],['今天','today'],['明天','tomorrow'],['喜欢','like'],['现在','now'],['点',"o'clock"],['分','minute'],['早上','morning'],['中午','noon'],['晚上','evening'],['起床','get up']];
+const sentences=[
+['Whose apple is this?',['这','是','谁','的','苹果','？'],['那','我','有']],
+['There are many little fish over there.',['那儿','有','很多','小鱼','。'],['这儿','去哪儿','吗']],
+['Where are you going?',['你','去','哪儿','？'],['我','学校','在']],
+['No, we are going to the library.',['不去','，','我们','去','图书馆','。'],['公园','有','吗']],
+['What day is it today?',['今天','星期','几','？'],['明天','号','点']],
+['Tomorrow is Tuesday.',['明天','星期二','。'],['今天','二月','号']],
+['When is your birthday?',['你的','生日','是','几月','几号','？'],['星期','几点','哪儿']],
+['My birthday is May 5th.',['我的','生日','是','五月','五号','。'],['星期五','五点','明天']],
+['Which day do you like?',['你','喜欢','星期几','？'],['今天','几月','生日']],
+['What time is it now?',['现在','几点','几分','？'],['今天','几号','星期']],
+['I get up at 6:30 in the morning.',['我','早上','六点半','起床','。'],['晚上','睡觉','星期六']],
+['What time shall we meet tomorrow?',['明天','几点','见','？'],['今天','哪儿','起床']],
+['See you tomorrow at 9 a.m.',['明天','上午','九点','见','。'],['晚上','九号','现在']],
+['I go to bed at 9 p.m.',['我','晚上','九点','睡觉','。'],['早上','起床','九号']]
+];
+const levelsData=[
+{icon:'🍎',name:'Ownership & Animals',type:'quiz',data:ownership},
+{icon:'🏫',name:'Places & Destinations',type:'quiz',data:places},
+{icon:'📅',name:'Days & Dates',type:'quiz',data:dates},
+{icon:'⏰',name:'Time & Routines',type:'quiz',data:times},
+{icon:'🧩',name:'New Word Matching',type:'match'},
+{icon:'✍️',name:'Sentence Builder',type:'sentence'},
+{icon:'🐲',name:'Final Boss',type:'boss'}
+];
+let stars=0,lives=5,done=Array(levelsData.length).fill(false),set=[],qi=0,level=0,locked=false,first=null,matched=0,si=0,built=[];
+const el=id=>document.getElementById(id),starsEl=el('stars'),livesEl=el('lives'),stageEl=el('stage'),levelsEl=el('levels'),emojiEl=el('emoji'),questionEl=el('question'),answersEl=el('answers'),feedbackEl=el('feedback'),nextEl=el('next'),qbarEl=el('qbar'),matchGridEl=el('matchGrid'),matchFeedbackEl=el('matchFeedback'),promptEl=el('prompt'),bankEl=el('bank'),sentenceFeedbackEl=el('sentenceFeedback'),finalStarsEl=el('finalStars'),counterEl=el('counter'),sentenceCounterEl=el('sentenceCounter');
+function show(id){document.querySelectorAll('section').forEach(x=>x.classList.add('hide'));el(id).classList.remove('hide');window.scrollTo(0,0)}
+function stats(){starsEl.textContent=stars;livesEl.textContent=lives}
+function showMap(){show('map');stageEl.textContent='Map';levelsEl.innerHTML='';levelsData.forEach((x,i)=>{let b=document.createElement('button');b.className='level '+(done[i]?'done ':'')+((i&&!done[i-1])?'locked':'');b.disabled=i&&!done[i-1];b.innerHTML='<div style="font-size:34px">'+(done[i]?'✅':x.icon)+'</div><h3>'+(i+1)+'. '+x.name+'</h3><div class="small">'+levelDescription(x.type,x.data)+'</div>';b.onclick=()=>startLevel(i);levelsEl.appendChild(b)})}
+function levelDescription(type,data){if(type==='quiz')return data.length+' questions';if(type==='match')return matchPairs.length+' word pairs';if(type==='sentence')return sentences.length+' sentences';return '15 mixed questions'}
+function startLevel(i){level=i;stageEl.textContent=(i+1)+'/'+levelsData.length;let x=levelsData[i];if(x.type==='quiz'){set=[...x.data];qi=0;renderQ()}else if(x.type==='match')startMatch();else if(x.type==='sentence')startSentence();else{set=shuffle([...ownership,...places,...dates,...times]).slice(0,15);qi=0;renderQ()}}
+function renderQ(){show('quiz');locked=false;let x=set[qi];counterEl.textContent='Question '+(qi+1)+' of '+set.length;emojiEl.textContent=x[0];questionEl.textContent=x[1];answersEl.innerHTML='';feedbackEl.textContent='';nextEl.classList.add('hide');qbarEl.style.width=(qi/set.length*100)+'%';x[3].forEach((t,i)=>{let b=document.createElement('button');b.className='ans';b.textContent=t;b.onclick=()=>answer(i,b);answersEl.appendChild(b)})}
+function answer(i,b){if(locked)return;locked=true;let x=set[qi];[...answersEl.children].forEach((n,k)=>{n.disabled=true;if(k===x[4])n.classList.add('correct')});if(i===x[4]){stars++;b.classList.add('correct');feedbackEl.textContent='✅ Great! Correct!'}else{lives=Math.max(0,lives-1);b.classList.add('wrong');feedbackEl.textContent='Not quite. Look at the correct answer.'}stats();qbarEl.style.width=((qi+1)/set.length*100)+'%';nextEl.classList.remove('hide')}
+function nextQ(){qi++;qi>=set.length?complete(level):renderQ()}
+function speakQ(){let x=set[qi];if('speechSynthesis' in window){speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(x[2]);u.lang='zh-CN';u.rate=.78;speechSynthesis.speak(u)}}
+function startMatch(){show('match');first=null;matched=0;matchFeedbackEl.textContent='';let arr=[];matchPairs.forEach((p,i)=>{arr.push([p[0],i]);arr.push([p[1],i])});matchGridEl.innerHTML='';shuffle(arr).forEach(x=>{let b=document.createElement('button');b.className='tile';b.textContent=x[0];b.dataset.p=x[1];b.onclick=()=>flip(b);matchGridEl.appendChild(b)})}
+function flip(b){if(b.classList.contains('matched')||b===first)return;b.classList.add('open');if(!first){first=b;return}if(first.dataset.p===b.dataset.p){first.classList.add('matched');b.classList.add('matched');first.classList.remove('open');b.classList.remove('open');first=null;matched++;stars+=2;stats();matchFeedbackEl.textContent='✅ Correct match!';if(matched===matchPairs.length)setTimeout(()=>complete(4),600)}else{let a=first;first=null;lives=Math.max(0,lives-1);stats();matchFeedbackEl.textContent='These two do not match. Try again.';setTimeout(()=>{a.classList.remove('open');b.classList.remove('open')},700)}}
+function startSentence(){si=0;show('sentence');renderSentence()}
+function renderSentence(){built=[];let x=sentences[si];sentenceCounterEl.textContent='Sentence '+(si+1)+' of '+sentences.length;promptEl.textContent=x[0];el('built').innerHTML='';bankEl.innerHTML='';sentenceFeedbackEl.textContent='';shuffle([...x[1],...x[2]]).forEach((w,n)=>{let b=document.createElement('button');b.className='word';b.textContent=w;b.dataset.n=n;b.onclick=()=>{built.push({word:w,button:b});b.disabled=true;b.style.opacity=.4;renderBuilt()};bankEl.appendChild(b)})}
+function renderBuilt(){let z=el('built');z.innerHTML='';built.forEach((item,i)=>{let b=document.createElement('button');b.className='word';b.textContent=item.word;b.title='Tap to remove';b.onclick=()=>{item.button.disabled=false;item.button.style.opacity=1;built.splice(i,1);renderBuilt()};z.appendChild(b)})}
+function clearBuilt(){built.forEach(item=>{item.button.disabled=false;item.button.style.opacity=1});built=[];renderBuilt()}
+function checkSentence(){let x=sentences[si];if(built.map(v=>v.word).join('')===x[1].join('')){stars+=2;stats();sentenceFeedbackEl.textContent='✅ Perfect!';setTimeout(()=>{si++;si>=sentences.length?complete(5):renderSentence()},700)}else{lives=Math.max(0,lives-1);stats();sentenceFeedbackEl.textContent='The word order is not correct. Try again.'}}
+function complete(i){done[i]=true;if(i===levelsData.length-1){finalStarsEl.textContent=stars;show('finish');stageEl.textContent='Complete'}else{alert('🎉 Level complete! The next level is unlocked.');showMap()}}
+function resetGame(){stars=0;lives=5;done=Array(levelsData.length).fill(false);stats();showMap()}
+function shuffle(a){for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 el('startBtn').addEventListener('click',showMap);el('resetMapBtn').addEventListener('click',resetGame);el('speakBtn').addEventListener('click',speakQ);el('next').addEventListener('click',nextQ);el('clearBtn').addEventListener('click',clearBuilt);el('checkBtn').addEventListener('click',checkSentence);el('playAgainBtn').addEventListener('click',resetGame);document.querySelectorAll('.map-btn').forEach(b=>b.addEventListener('click',showMap));stats();
-</script></body></html>
+</script>
+</body>
+</html>
